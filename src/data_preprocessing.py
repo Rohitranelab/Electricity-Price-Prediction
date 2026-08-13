@@ -13,6 +13,8 @@ def preprocess_data(df: pd.DataFrame):
         for i in df.columns:
             df[i] = pd.to_numeric(df[i], errors = 'coerce')
 
+        df = df.dropna()
+        
         return df
     except Exception as e:
         print(e)
