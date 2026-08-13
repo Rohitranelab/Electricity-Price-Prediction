@@ -219,4 +219,5 @@ __marimo__/
 
 data/
 model/
+model_performance/
 *.pkl
