@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Electricity Price Prediction</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="header">
+                <div class="icon">⚡</div>
+
+                <h1>Electricity Price Prediction</h1>
+
+                <p>
+                    Enter the required weather and electricity-system
+                    information to predict the electricity price.
+                </p>
+            </div>
+
+            <form method="POST">
+
+                <div class="form-grid">
+
+                    <!-- Day -->
+                    <div class="form-group">
+                        <label for="day">Day</label>
+                        <input
+                            type="number"
+                            id="day"
+                            name="day"
+                            min="1"
+                            max="31"
+                            step="1"
+                            value="{{ values.day }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- Month -->
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <input
+                            type="number"
+                            id="month"
+                            name="month"
+                            min="1"
+                            max="12"
+                            step="1"
+                            value="{{ values.month }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- Forecast Wind Production -->
+                    <div class="form-group">
+                        <label for="forecast_wind_production">
+                            Forecast Wind Production
+                        </label>
+
+                        <input
+                            type="number"
+                            id="forecast_wind_production"
+                            name="forecast_wind_production"
+                            min="0"
+                            step="any"
+                            value="{{ values.forecast_wind_production }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- System Load EA -->
+                    <div class="form-group">
+                        <label for="system_load_ea">
+                            System Load EA
+                        </label>
+
+                        <input
+                            type="number"
+                            id="system_load_ea"
+                            name="system_load_ea"
+                            min="0"
+                            step="any"
+                            value="{{ values.system_load_ea }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- ORK Temperature -->
+                    <div class="form-group">
+                        <label for="ork_temperature">
+                            ORK Temperature
+                        </label>
+
+                        <input
+                            type="number"
+                            id="ork_temperature"
+                            name="ork_temperature"
+                            step="any"
+                            value="{{ values.ork_temperature }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- ORK Windspeed -->
+                    <div class="form-group">
+                        <label for="ork_windspeed">
+                            ORK Windspeed
+                        </label>
+
+                        <input
+                            type="number"
+                            id="ork_windspeed"
+                            name="ork_windspeed"
+                            min="0"
+                            step="any"
+                            value="{{ values.ork_windspeed }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- CO2 Intensity -->
+                    <div class="form-group">
+                        <label for="co2_intensity">
+                            CO2 Intensity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="co2_intensity"
+                            name="co2_intensity"
+                            min="0"
+                            step="any"
+                            value="{{ values.co2_intensity }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- Actual Wind Production -->
+                    <div class="form-group">
+                        <label for="actual_wind_production">
+                            Actual Wind Production
+                        </label>
+
+                        <input
+                            type="number"
+                            id="actual_wind_production"
+                            name="actual_wind_production"
+                            min="0"
+                            step="any"
+                            value="{{ values.actual_wind_production }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- System Load EP2 -->
+                    <div class="form-group">
+                        <label for="system_load_ep2">
+                            System Load EP2
+                        </label>
+
+                        <input
+                            type="number"
+                            id="system_load_ep2"
+                            name="system_load_ep2"
+                            min="0"
+                            step="any"
+                            value="{{ values.system_load_ep2 }}"
+                            required
+                        >
+                    </div>
+
+                    <!-- SMPEP2 -->
+                    <div class="form-group">
+                        <label for="smpep2">SMPEP2</label>
+
+                        <input
+                            type="number"
+                            id="smpep2"
+                            name="smpep2"
+                            step="any"
+                            value="{{ values.smpep2 }}"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <button type="submit">
+                    ⚡ Predict Electricity Price
+                </button>
+
+            </form>
+
+            {% if prediction %}
+                <div class="success-message">
+                    <p>Prediction completed successfully!</p>
+
+                    <div class="prediction">
+                        <span>Predicted Electricity Price</span>
+                        <strong>{{ prediction }}</strong>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

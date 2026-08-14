@@ -1,59 +1,68 @@
 import pickle
 import pandas as pd
-import streamlit as st
+from flask import render_template, request, Flask
 
-with open("model/model.pkl", "rb") as file:
+app = Flask(__name__)
+
+with open('model/model.pkl', 'rb') as file:
     model = pickle.load(file)
 
-st.set_page_config(page_title = "Electricity Price Prediction", page_icon = "⚡", layout = "centered"
-)
+@app.route("/", methods = ["GET", "POST"])
+def home():
+    prediction = None
+    error = None
 
-st.title("⚡ Electricity Price Prediction")
-st.write("Enter the required weather and electricity-system information to predict the electricity price.")
+    values = {
+        'day' : 1,
+        'month' : 1,
+        'forecast_wind_production' : 0.0,
+        'system_load_ea' : 0.0,
+        'ork_temperature' : 10.0,
+        'ork_windspeed' : 0.0,
+        'co2_intensity' : 0.0,
+        'actual_wind_production' : 0.0,
+        'system_load_ep2' : 0.0,
+        'smpep2' : 0.0
+    }
 
-day = st.number_input("Day", min_value = 1, max_value = 31, value = 1, step = 1)
+    if request.method == "POST":
+        try:
+            values['day'] = int(request.form['day'])
+            values['month'] = int(request.form['month'])
+            values['forecast_wind_production'] = float(request.form['forecast_wind_production'])
+            values['system_load_ea'] = float(request.form['system_load_ea'])
+            values['ork_temperature'] = float(request.form['ork_temperature'])
+            values['ork_windspeed'] = float(request.form['ork_windspeed'])
+            values['co2_intensity'] = float(request.form['co2_intensity'])
+            values['actual_wind_production'] = float(request.form['actual_wind_production'])
+            values['system_load_ep2'] = float(request.form['system_load_ep2'])
+            values['smpep2'] = float(request.form['smpep2'])
 
-month = st.number_input("Month", min_value = 1, max_value = 12, value = 1, step = 1) 
+            input_data = pd.DataFrame({
+                "Day": [values["day"]],
+                "Month": [values["month"]],
+                "ForecastWindProduction": [values["forecast_wind_production"]],
+                "SystemLoadEA": [values["system_load_ea"]],
+                "ORKTemperature": [values["ork_temperature"]],
+                "ORKWindspeed": [values["ork_windspeed"]],
+                "CO2Intensity": [values["co2_intensity"]],
+                "ActualWindProduction": [values["actual_wind_production"]],
+                "SystemLoadEP2": [values["system_load_ep2"]],
+                "SMPEP2": [values["smpep2"]]
+            })
 
-forecast_wind_production = st.number_input("Forecast Wind Production", min_value = 0.0, value = 0.0)
+            result = model.predict(input_data)
+            prediction = f"{result[0]:.2f}"
 
-system_load_ea = st.number_input("System Load EA",min_value = 0.0, value = 0.0)
+        except Exception as e:
+            error = f"Prediction failed: {str(e)}"
 
-ork_temperature = st.number_input("ORK Temperature", value = 10.0)
+    return render_template(
+        "index.html",
+        prediction = prediction,
+        error = error,
+        values = values
+    )
 
-ork_windspeed = st.number_input("ORK Windspeed", min_value = 0.0, value = 0.0)
-
-co2_intensity = st.number_input("CO2 Intensity",min_value = 0.0, value = 0.0)
-
-actual_wind_production = st.number_input("Actual Wind Production", min_value = 0.0, value = 0.0)
-
-system_load_ep2 = st.number_input("System Load EP2", min_value = 0.0, value = 0.0)
-
-smpep2 = st.number_input("SMPEP2", value = 0.0)
-
-input_data = pd.DataFrame({
-    "Day": [day],
-    "Month": [month],
-    "ForecastWindProduction": [forecast_wind_production],
-    "SystemLoadEA": [system_load_ea],
-    "ORKTemperature": [ork_temperature],
-    "ORKWindspeed": [ork_windspeed],
-    "CO2Intensity": [co2_intensity],
-    "ActualWindProduction": [actual_wind_production],
-    "SystemLoadEP2": [system_load_ep2],
-    "SMPEP2": [smpep2]
-})
-
-if st.button("Predict Electricity Price"):
-    try:
-        prediction = model.predict(input_data)
-
-        st.success("Prediction completed successfully!")
-
-        st.metric(
-            label="Predicted Electricity Price",
-            value=f"{prediction[0]:.2f}"
-        )
-
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
+if __name__ == '__main__':
+    app.run(debug = True)
