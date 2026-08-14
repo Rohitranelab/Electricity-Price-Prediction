@@ -7,7 +7,7 @@ def train_and_save_model(
     train_path = "./data/processed/train_processed.csv",
     model_path = "./model/model.pkl",
     target_column = "SMPEA",
-    n_estimators = 100,
+    n_estimators = 500,
     n_jobs = -1
 ):
     train_data = pd.read_csv(train_path)

@@ -1,11 +1,11 @@
 stages:
   data_ingestion:
     cmd: python src/data_ingestion.py
-    deps: 
+    deps:
     - src/data_ingestion.py
     outs:
     - data/raw
-  
+
   data_preprocessing:
     cmd: python src/data_preprocessing.py
     deps:
@@ -21,7 +21,7 @@ stages:
     - src/model_building.py
     outs:
     - model/model.pkl
-  
+
   model_evaluation:
     cmd: python src/model_evaluation.py
     deps:
@@ -29,3 +29,8 @@ stages:
     - src/model_evaluation.py
     outs:
     - model_performance/metrics.json
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step

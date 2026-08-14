@@ -8,7 +8,8 @@ from sklearn.metrics import (
 import pickle
 import json
 import os
-
+import yaml
+from dvclive import Live
 
 def test_model(
     test_data_path="./data/processed/test_processed.csv",
@@ -42,6 +43,12 @@ def test_model(
             "Mean Squared Error": mse,
             "Root Mean Squared Error": rmse
         }
+
+        with Live(save_dvc_exp = True) as live:
+            live.log_metric('R2 Score', r2_score(y_test, y_pred))
+            live.log_metric('Mean Absolute Error', mean_absolute_error(y_test, y_pred))
+            live.log_metric('Mean Squared Error', mean_squared_error(y_test, y_pred))
+            live.log_metric('Root Mean Squared Error', root_mean_squared_error(y_test, y_pred))
 
         # Create directory for metrics
         metrics_dir = os.path.dirname(metrics_path)
