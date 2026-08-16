@@ -1,4 +1,4 @@
 Flask
 pandas
-scikit-learn
+scikit-learn == 1.9.0
 gunicorn
