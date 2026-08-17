@@ -120,6 +120,11 @@ After entering weather and electricity-system details and clicking Predict, the 
 
 ```
 Electricity-Price-Prediction/
+|
+├── Images/
+│   ├── Correlation Heatmap of Electricity Market Features.png
+│   ├── electricity-price-prediction-ui.png
+│   ├── electricity-price-prediction-result.png
 │
 ├── src/                          # Core ML pipeline source code
 │   ├── data_ingestion.py         # Downloads raw data & splits train/test
@@ -184,7 +189,8 @@ Prediction (served through Flask web app)
 
 ## 🔍 Exploratory Data Analysis
 
-> 🔲 **Not implemented** — no dedicated EDA notebook or visualization scripts are present in this repository. Adding an EDA notebook (distribution plots, correlation heatmaps, seasonal trends) is listed under [Future Improvements](#-future-improvements).
+Figure: Correlation Heatmap of Electricity Market Features
+![Correlation Heatmap of Electricity Market Features](Images/correlation_heatmap.png)
 
 ---
 
