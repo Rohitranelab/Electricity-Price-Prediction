@@ -319,13 +319,6 @@ docker run -p 5000:5000 electricity-price-prediction
 Predicted Electricity Price: 52.14
 ```
 
-
----
-
-## 🖼 Visualizations
-
-> 📊 *Add plots here, e.g. feature importance chart, actual vs. predicted price plot, or DVCLive-generated metric trend plots from `dvclive/plots/`.*
-
 ---
 
 ## 🔧 Configuration
