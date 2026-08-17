@@ -122,7 +122,7 @@ After entering weather and electricity-system details and clicking Predict, the 
 Electricity-Price-Prediction/
 |
 ├── Images/
-│   ├── Correlation Heatmap of Electricity Market Features.png
+│   ├── correlation_heatmap.png
 │   ├── electricity-price-prediction-ui.png
 │   ├── electricity-price-prediction-result.png
 │
