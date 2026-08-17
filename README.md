@@ -66,14 +66,11 @@
 
 ## 🎥 Demo
 
-> 📸 *Add a screenshot of the web app here*
-> `![App Screenshot](static/demo-screenshot.png)`
+After entering weather and electricity-system details, the model predicts the electricity price in real time.
+![Electricity Price Prediction UI](Images/electricity-price-prediction-ui.png)
 
-> 🎬 *Add a GIF walkthrough of the prediction flow here*
-
-> 🌐 *Add a live deployment link here (if hosted)*
-
-The project ships with a lightweight **Flask web app** (`app.py` + `templates/index.html`) where users can input weather and grid parameters and get an instant price prediction.
+After entering weather and electricity-system details and clicking Predict, the model returns an insurance price of the applicant:
+![Electricity Price Prediction Result](Images/electricity-price-prediction-result.png)
 
 ---
 
